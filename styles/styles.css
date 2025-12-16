@@ -16,7 +16,11 @@ border-radius: 30px;
 .airconditionscont, .customCard {
 background-color: #79AABE !important;
 border-radius: 20px;
+}
 
+
+.airconditionscont {
+    font-size: 20px;
 }
 .splash {
     color: white;
