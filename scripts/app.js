@@ -46,7 +46,7 @@ const getLocation = () => {
                 .then(data => {
                     data;
                     forecastdata = data;
-                    console.log(forecastdata.list[0].main.temp)
+                    console.log(forecastdata.list[0])
                     todaytemp = forecastdata.list[0].main.temp;
                     todaymax = forecastdata.list[0].main.temp_max;
                     todaymin = forecastdata.list[0].main.temp_min;
@@ -62,58 +62,58 @@ const getLocation = () => {
 
                     maintemp.innerHTML = "";
                     const todaytempP = document.createElement("p");
-                    todaytempP.textContent = todaytemp + "°";
+                    todaytempP.textContent = Math.floor(todaytemp) + "°";
                     maintemp.appendChild(todaytempP);
 
 
                     todaymaxparent.innerHTML = "";
                     const todaymaxP = document.createElement("p");
-                    todaymaxP.textContent = todaymax + "°";
+                    todaymaxP.textContent = Math.floor(todaymax) + "°";
                     todaymaxparent.appendChild(todaymaxP);
 
                     todayminparent.innerHTML = "";
                     const todayminP = document.createElement("p");
-                    todayminP.textContent = todaymin + "°";
+                    todayminP.textContent = Math.floor(todaymin) + "°";
                     todayminparent.appendChild(todayminP);   
 
                     min2parent.innerHTML = "";
                     const min2P = document.createElement("p");
-                    min2P.textContent = min2 + "°";
+                    min2P.textContent = Math.floor(min2) + "°";
                     min2parent.appendChild(min2P);
 
                     min3parent.innerHTML = "";
                     const min3p = document.createElement("p");
-                    min3p.textContent = min3 + "°";
+                    min3p.textContent = Math.floor(min3) + "°";
                     min3parent.appendChild(min3p); 
 
                     max2parent.innerHTML = "";
                     const max2P = document.createElement("p");
-                    max2P.textContent = max2 + "";
+                    max2P.textContent = Math.floor(max2) + "°";
                     max2parent.appendChild(max2P);
 
                     max3parent.innerHTML = "";
                     const max3p = document.createElement("p");
-                    max3p.textContent = max3 + "";
+                    max3p.textContent = Math.floor(max3) + "°";
                     max3parent.appendChild(max3p); 
 
                     min4parent.innerHTML = "";
                     const min4P = document.createElement("p");
-                    min4P.textContent = min4 + "";
+                    min4P.textContent = Math.floor(min4) + "°";
                     min4parent.appendChild(min4P);
 
                     min5parent.innerHTML = "";
                     const min5p = document.createElement("p");
-                    min5p.textContent = min5 + "";
+                    min5p.textContent = Math.floor(min5) + "°";
                     min5parent.appendChild(min5p); 
 
                     max4parent.innerHTML = "";
                     const max4P = document.createElement("p");
-                    max4P.textContent = max4 + "";
+                    max4P.textContent = Math.floor(max4) + "°";
                     max4parent.appendChild(max4P);
 
                     max5parent.innerHTML = "";
                     const max5p = document.createElement("p");
-                    max5p.textContent = max5 + "";
+                    max5p.textContent = Math.floor(max5) + "°";
                     max5parent.appendChild(max5p); 
 
                 })
