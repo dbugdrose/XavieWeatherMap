@@ -2,16 +2,20 @@ const button = document.getElementById("getLocationBtn");
 const output = document.getElementById("output");
 const mapParent = document.getElementById("mapParent");
 const searchbar = document.getElementById("searchbar");
+const maintemp = document.getElementById("maintemp");
 
 let weatherdata;
 let forecastdata;
 let citydata;
+let celsiusTemp;
+let fahrenheitTemp;
+let todaytemp;
 let data;
 let lat;
 let lon;
 const city = searchbar.value.toLowerCase();
 const limit = 1; // Get only the top result
-const geocodingApiUrl = `https://api.openweathermap.org${city}&limit=${limit}&appid=28e638c5b8ef34fe0f1f7eb35f73e818`;
+const geocodingApiUrl = `https://api.openweathermap.org${city}&limit=${limit}&units=imperial&appid=28e638c5b8ef34fe0f1f7eb35f73e818`;
 
 
 // --------------get data function start-------------------------------------------------------------------//
@@ -25,16 +29,17 @@ const getLocation = () => {
             console.log(`Latitude: ${lat}, Longitude: ${lon}`);
             output.textContent = `Latitude: ${lat}, Longitude: ${lon}`;
 
-            fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=28e638c5b8ef34fe0f1f7eb35f73e818`).then((response) => response.text())
+            fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=28e638c5b8ef34fe0f1f7eb35f73e818`).then((response) => response.json())
                 .then(data => {
                     weatherdata = data;
+                    console.log(weatherdata.main.temp)
+                    todaytemp = weatherdata.main.temp;
                 })
 
-            fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=28e638c5b8ef34fe0f1f7eb35f73e818`).then((response) => response.text())
+            fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=28e638c5b8ef34fe0f1f7eb35f73e818`).then((response) => response.json())
                 .then(data => {
                     data;
                     forecastdata = data;
-                    console.log(forecastdata);
 
                 })
             const map = document.createElement("div")
@@ -44,6 +49,12 @@ const getLocation = () => {
         })
 }
 
+function displayContent(){
+    maintemp.innerHTML = "";
+   const todaytempP = document.createElement("p");
+   todaytempP.textContent = todaytemp + " F°";
+   maintemp.appendChild(todaytempP);
+}
 
 // Function to fetch coordinates
 // function getCoordinatesByCity(city) {
@@ -74,7 +85,7 @@ const getLocation = () => {
 // async function getWeatherData(lat, lon) {
 //     try {
 
-//         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=28e638c5b8ef34fe0f1f7eb35f73e818&units=metric`).then((response) => response.text())
+//         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=28e638c5b8ef34fe0f1f7eb35f73e818&units=imperial`).then((response) => response.text())
 //             .then(data => {
 //                 data;
 //                 let coordinatecitydata = data;
@@ -96,9 +107,8 @@ const getLocation = () => {
 
 button.addEventListener("click", () => {
     // Check if the browser supports geolocation
-
     getLocation();
-
+    displayContent();
 });
 
 // --------------get location function end-------------------------------------------------------------------//
