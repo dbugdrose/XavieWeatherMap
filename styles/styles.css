@@ -31,3 +31,18 @@ border-radius: 20px;
 .maintemp {
     font-size: 150px;
 }
+
+.customCard {
+width: 100% !important;
+}
+
+.map {
+    max-width: 100%;
+}
+
+.maingrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 15px;
+}
