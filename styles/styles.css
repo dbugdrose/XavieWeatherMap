@@ -1,5 +1,5 @@
-body {
-    background-color: #1D3254;
+.body-bg {
+    background-color: #1D3254 !important;
 
 }
 
@@ -11,4 +11,23 @@ background-color: #263A5E !important;
 .dropdown {
 background-color: #D9D9D9;
 border-radius: 30px;
+}
+
+.airconditionscont, .customCard {
+background-color: #79AABE !important;
+border-radius: 20px;
+
+}
+.splash {
+    color: white;
+    font-size: 40px;
+}
+
+.splash p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.maintemp {
+    font-size: 150px;
 }
