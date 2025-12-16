@@ -9,10 +9,13 @@ const  max2parent = document.getElementById("max2parent");
 const  max3parent = document.getElementById("max3parent");
 const  max4parent = document.getElementById("max4parent");
 const  max5parent = document.getElementById("max5parent");
+const starBtn = document.getElementById("starBtn");
+const favoritesParent = document.getElementById("favoritesParent");
 
-
-
-
+let isFilled = false;
+let darkblue = true;
+let gray = false;
+let black = false;
 
 let weatherdata;
 let forecastdata;
@@ -25,10 +28,13 @@ let todaymin;
 let data;
 let lat;
 let lon;
-const city = searchbar.value.toLowerCase();
-const limit = 1; // Get only the top result
-const geocodingApiUrl = `https://api.openweathermap.org${city}&limit=${limit}&units=imperial&appid=28e638c5b8ef34fe0f1f7eb35f73e818`;
-
+let city = searchbar.value.toLowerCase();
+let stateCode;
+let countryCode;
+let favorite = city;
+let favorites = [];
+const limit = 1;
+const geocodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${limit}&appid=${APIKey}`;
 
 // --------------get data function start-------------------------------------------------------------------//
 
@@ -39,10 +45,8 @@ const getLocation = () => {
             lon = position.coords.longitude;
 
             console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-            output.textContent = `Latitude: ${lat}, Longitude: ${lon}`;
 
-
-            fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=28e638c5b8ef34fe0f1f7eb35f73e818`).then((response) => response.json())
+            fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`).then((response) => response.json())
                 .then(data => {
                     data;
                     forecastdata = data;
@@ -116,7 +120,9 @@ const getLocation = () => {
                     max5p.textContent = Math.floor(max5) + "°";
                     max5parent.appendChild(max5p); 
 
+
                 })
+
             const map = document.createElement("div")
             mapParent.innerHTML = "";
             map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="250px" height="170" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
@@ -125,64 +131,153 @@ const getLocation = () => {
 }
 
 // Function to fetch coordinates
-// function getCoordinatesByCity(city) {
-//     try {
-//         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=28e638c5b8ef34fe0f1f7eb35f73e818`)
-//         .then((response) => response.json())
-//             .then(data => {
-//                 data;
-//                 citydata = data;
-//                 console.log(citydata);
+function getCoordinatesByCity(city) {
+    try {
+        fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${APIKey}`)
+        .then((response) => response.json())
+            .then(data => {
+                data;
+                citydata = data;
+                console.log(citydata);
 
-//         if (citydata.length > 0) {
-//             const { lat, lon, name, country } = citydata[0];
-//             console.log(`Coordinates for ${name}, ${country}: Latitude = ${lat}, Longitude = ${lon}`);
-//             return { lat, lon };
-//         } else {
-//             console.log("City not found.");
-//             return null;
-//         }
-//      })
-//     } catch (error) {
-//         console.error("Error fetching geocoding data:", error);
-//         return null;
-//     }
+        if (citydata.length > 0) {
+            const { lat, lon, name, country } = citydata[0];
+            console.log(`Coordinates for ${name}, ${country}: Latitude = ${lat}, Longitude = ${lon}`);
+            return { lat, lon };
+        } else {
+            console.log("City not found.");
+            return null;
+        }
+     })
+    } catch (error) {
+        console.error("Error fetching geocoding data:", error);
+        return null;
+    }
 
-// }
+}
 
-// async function getWeatherData(lat, lon) {
-//     try {
+async function getWeatherData(lat, lon) {
+    try {
 
-//         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=28e638c5b8ef34fe0f1f7eb35f73e818&units=imperial`).then((response) => response.text())
-//             .then(data => {
-//                 data;
-//                 let coordinatecitydata = data;
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}&units=imperial`).then((response) => response.text())
+            .then(data => {
+                data;
+                let coordinatecitydata = data;
 
-//         console.log("Weather data:", coordinatecitydata);
-//         return coordinatecitydata;
-//                     })
-//     } catch (error) {
-//         console.error("Error fetching weather data:", error);
-//         return null;
-//     }
-// }
+        console.log("Weather data:", coordinatecitydata);
+        return coordinatecitydata;
+                    })
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
+        return null;
+    }
+}
+
+const getLocalStorage = () => {
+    favorites = localStorage.getItem("Favorites");
+
+    if(favorites === null)
+    {return []};
+    return JSON.parse(favorites);
+}
+
+const saveToStorage = (favorite) => {
+    favorites = getLocalStorage();
+
+    if(!favorites.includes(favorite)){
+        favorites.push(favorite);
+    }
+localStorage.setItem("Favorites", JSON.stringify(favorites))
+}
+
+const removeFromStorage = (favorite) => {
+    let favorites = getLocalStorage();
+    let favoriteIndex = favorites.indexOf(favorite);
+    favorites.splice(favoriteIndex, 1);
+
+    localStorage.setItem("Grocery Items", JSON.stringify(favorites));
+}
+
+function DisplayFavorite(){
+
+favorites = getLocalStorage();
+favoritesParent.innerHTML = "";
+console.log(favorites);
+favorites.forEach (favorite => {
+console.log(favorite);
+let p = document.createElement("p");
+p.textContent = favorite;
+
+const deleteBtn = document.createElement("button");
+deleteBtn.innerHTML = `<img src="/xavieassets/star filled.png" alt="remove favorite star icon">`;
+
+deleteBtn.addEventListener("click", () => {
+    removeFromStorage(favorite);
+    p.remove();
+})
+
+p.appendChild (deleteBtn);
+groceryParent.appendChild(p);
+});
+}
 
 // --------------get data function end -------------------------------------------------------------------//
 
+//------------------themes start -------------------------------//
+
+function DarkBlue() {
+    let darkblue = true;
+    let gray = false;
+    let black = false;
+bodyTheme.classList.replace('body-gray', 'body-dark-blue');
+navTheme.classList.replace('body-black', 'body-dark-blue');
+}
+
+function Black() {
+    let darkblue = false;
+    let gray = false;
+    let black = true;
+bodyTheme.classList.replace('body-gray', 'body-black');
+navTheme.classList.replace('body-dark-blue', 'body-black');
+}
+function Gray() {
+    let darkblue = false;
+    let gray = true;
+    let black = false;
+bodyTheme.classList.replace('body-black', 'body-gray');
+navTheme.classList.replace('body-dark-blue', 'body-gray');
+}
+// --------------------------themes end---------------------------------------------
 
 
-// --------------get location function start -------------------------------------------------------------------//
+// --------------event listeners start-------------------------------------------------------------------//
+
 
 button.addEventListener("click", () => {
     // Check if the browser supports geolocation
     getLocation();
+
 });
 
-// --------------get location function end-------------------------------------------------------------------//
 
-// searchbar.addEventListener("keypress", (event) => {
-//     if (event.key === "Enter") {
-//         getCoordinatesByCity(city);
-//         getWeatherData(lat, lon);
-//     }
-// })
+
+searchbar.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        getCoordinatesByCity(city);
+        console.log(citydata)
+    }
+})
+
+starBtn.addEventListener("click", () => {
+ isFilled = !isFilled;
+    if (isFilled) {
+    starBtn.src = "/xavieassets/star.png";
+  } else {
+    starBtn.src = "/xavieassets/star filled.png";
+    getLocalStorage();
+    saveToStorage({city});
+    console.log(city);
+    DisplayFavorites();
+  }
+});
+

@@ -1,16 +1,29 @@
-.body-bg {
+body {
+      font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.bg-dark-blue {
     background-color: #1D3254 !important;
 
 }
 
-.navbar {
+.nav-dark-blue {
 background-color: #263A5E !important;
 
+}
+
+.navbar {
+    display: flex;
+align-items: center;
 }
 
 .dropdown {
 background-color: #D9D9D9;
 border-radius: 30px;
+height: 40px !important;
 }
 
 .airconditionscont, .customCard {
@@ -63,4 +76,9 @@ border-radius: 30px !important;
 .cardimg {
     position: relative;
     left: 0;
+}
+
+form {
+    display: flex;
+    align-items: center !important;
 }
