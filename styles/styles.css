@@ -1,13 +1,32 @@
-body {
-      font-family: "Inter", sans-serif;
+.bg-dark-blue {
+    background-color: #1D3254 !important;
+    font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
 }
 
-.bg-dark-blue {
-    background-color: #1D3254 !important;
+.bg-gray {
+    background-color: #A0A0A0 !important;
+    font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
+.nav-gray {
+     background-color: #C9CBCF !important;
+}
+
+.bg-black {
+    background-color: #000000 !important;
+    font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.nav-black {
+     background-color: #23262B !important;
 }
 
 .nav-dark-blue {
@@ -28,12 +47,23 @@ height: 40px !important;
 
 .airconditionscont, .customCard {
 background-color: #79AABE !important;
-border-radius: 20px;
+border-radius: 18px;
+font-weight: 600;
 }
 
 
 .airconditionscont {
     font-size: 20px;
+    font-weight: 600;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+
+}
+
+.secondgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
 }
 .splash {
     color: white;
@@ -50,9 +80,13 @@ border-radius: 20px;
 }
 
 .customCard {
-width: 227px !important;
+width: 15em;
+min-width: 190px;
 height: 170px !important;
 border-radius: 30px !important;
+padding: 10px;
+margin-top: -80px;
+
 }
 
 .map {
@@ -64,6 +98,7 @@ border-radius: 30px !important;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     gap: 15px;
+    max-width: 100%;
 }
 
 .cardtemp {
@@ -81,4 +116,27 @@ border-radius: 30px !important;
 form {
     display: flex;
     align-items: center !important;
+}
+
+.starBtn, .starBtn:hover {
+    border: none;
+}
+
+@media (max-width: 1270px) {
+.customCard {
+width: 12em;
+height: 170px !important;
+border-radius: 30px !important;
+padding: 10px;
+}
+}
+
+@media (max-width: 1100px) {
+.mapParent, .mapP {
+display:none;
+}
+.airconditionscont {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
 }

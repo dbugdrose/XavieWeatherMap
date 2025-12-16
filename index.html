@@ -36,7 +36,8 @@
                                 <ul class="dropdown-menu" id="favoritesParent">
                                 </ul>
                             </li>
-                            <img src="/xavieassets/star.png" width="40px" height="40px" alt="star favorites icon" id="starBtn">
+                            <img src="/xavieassets/star.png" width="40px" height="40px" alt="star favorites icon"
+                                class="starBtn" id="starBtn">
                         </ul>
 
                         <span>
@@ -47,18 +48,19 @@
                                         Themes
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Gray</a></li>
-                                        <li><a class="dropdown-item" href="#">Black</a></li>
-                                        <li><a class="dropdown-item" href="#">Dark Blue</a></li>
+                                        <li><a class="dropdown-item" id="grayBtn" href="#">Gray</a></li>
+                                        <li><a class="dropdown-item" id="blackBtn" href="#">Black</a></li>
+                                        <li><a class="dropdown-item" id="darkBlueBtn" href="#">Dark Blue</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                        F
+                                        Temperature
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">C</a></li>
+                                        <li><a class="dropdown-item" id="fBtn" href="#">F</a></li>
+                                        <li><a class="dropdown-item" id="cBtn" href="#">C</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -91,21 +93,21 @@
                 </div>
             </div>
 
-            <ul class="nav nav-tabs d-flex justify-content-center">
+            <ul class="nav d-flex justify-content-center">
                 <div class="maingrid mb-3">
                     <li class="nav-item">
-                        <div class="customCard card  px-5">
+                        <div class="customCard card ">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-3" id="date0Parent">
                                     <p id="todaydate">8</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-9 text-center" id="day0Parent">
                                     <p>Today</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="70px" height="70px">
+                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="100px" height="100px">
                                 </div>
                                 <div class="col-6">
                                     <div class="row cardtemp" id="todaymaxparent">50°</div>
@@ -116,20 +118,20 @@
                     </li>
                     <li class="nav-item">
 
-                        <div class="customCard card  px-5">
+                        <div class="customCard card ">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-3" id="date1Parent">
                                     <p>8</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-9 text-center" id="day1Parent">
                                     <p>Yesterday</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="70px" height="70px">
+                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="100px" height="100px">
                                 </div>
-                                <div class="col-6 ">
+                                <div class="col-6">
                                     <div class="row cardtemp" id="max2parent">50°</div>
                                     <div class="row cardtemp" id="min2parent">41°</div>
                                 </div>
@@ -138,18 +140,18 @@
                     </li>
                     <li class="nav-item">
 
-                        <div class="customCard card  px-5">
+                        <div class="customCard card ">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-3" id="date2Parent">
                                     <p>8</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-9 text-center" id="day2Parent">
                                     <p>Yesterday</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="70px" height="70px">
+                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="100px" height="100px">
                                 </div>
                                 <div class="col-6">
                                     <div class="row cardtemp" id="max3parent">50°</div>
@@ -160,18 +162,18 @@
                     </li>
                     <li class="nav-item">
 
-                        <div class="customCard card px-5">
+                        <div class="customCard card">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-3" id="date3Parent">
                                     <p>8</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-9 text-center" id="day3Parent">
                                     <p>Yesterday</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="70px" height="70px">
+                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="100px" height="100px">
                                 </div>
                                 <div class="col-6">
                                     <div class="row cardtemp" id="max4parent">50°</div>
@@ -182,18 +184,18 @@
                     </li>
                     <li class="nav-item">
 
-                        <div class="customCard card px-5">
+                        <div class="customCard card">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-3" id="date4Parent">
                                     <p>8</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-9 text-center" id="day4Parent">
                                     <p>Yesterday</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="70px" height="70px">
+                                    <img src="/xavieassets/sunny.png" alt="sunny icon" width="100px" height="100px">
                                 </div>
                                 <div class="col-6">
                                     <div class="row cardtemp" id="max5parent">50°</div>
@@ -204,125 +206,116 @@
                     </li>
                 </div>
             </ul>
-
-            <div class="container airconditionscont">
-                <div class="row">
-                    <p>Air Conditions</p>
-                </div>
-                <div class="row">
-                    <div class="col-9">
-                        <div class="row">
-                            <div class="col">
-                                <img src="/xavieassets/realfeel.png" alt="real feel thermometer icon" width="50px"
-                                    height="50px">
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <p>Real Feel</p>
-                                </div>
-                                <div class="row">
-                                    <p id="realfeel">5°</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="/xavieassets/wind.png" alt="wind icon" width="50px" height="50px">
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <p>Wind</p>
-                                </div>
-                                <div class="row">
-                                    <p id="wind">0.2 Km/h</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="/xavieassets/humidity.png" alt="humidity water droplet icon" width="50px"
-                                    height="50px">
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <p>Humidity</p>
-                                </div>
-                                <div class="row">
-                                    <p id="humidity">93%</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="/xavieassets/airquality.png" alt="air quality icon" width="50px"
-                                    height="50px">
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <p>Air Quality</p>
-                                </div>
-                                <div class="row">
-                                    <p id="airquality">59</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="/xavieassets/visibility.png" alt="visibility icon" width="50px" height="px">
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <p>Visibility</p>
-                                </div>
-                                <div class="row">
-                                    <p id="visibility">13km</p>
-                                </div>
-                            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="container-fluid airconditionscont">
+                    <div class="row">
+                        <p>Air Conditions</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
                             <div class="row">
                                 <div class="col">
-                                    <img src="/xavieassets/chanceofrain.png" alt="chance of rain raindrop icon"
-                                        width="50px" height="50px">
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <p>Chance of Rain</p>
-                                    </div>
-                                    <div class="row">
-                                        <p id="chanceofrain">0cm</p>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <img src="/xavieassets/uv index.png" alt="UV index sun icon" width="50px"
+                                    <img src="/xavieassets/realfeel.png" alt="real feel thermometer icon" width="50px"
                                         height="50px">
                                 </div>
                                 <div class="col">
                                     <div class="row">
-                                        <p>UV Index</p>
+                                        <p>Real Feel</p>
                                     </div>
-                                    <div class="row">
-                                        <p id="uvindex">2</p>
+                                    <div class="row" id="realfeelParent">
+                                        <p>5°</p>
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <img src="/xavieassets/pressure.png" alt="pressure barometer icon" width="50px"
+                                    <img src="/xavieassets/wind.png" alt="wind icon" width="50px" height="50px">
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <p>Wind</p>
+                                    </div>
+                                    <div class="row" id="windParent">
+                                        <p>0.2 Km/h</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <img src="/xavieassets/humidity.png" alt="humidity water droplet icon" width="50px"
                                         height="50px">
                                 </div>
                                 <div class="col">
                                     <div class="row">
-                                        <p>Pressure</p>
+                                        <p>Humidity</p>
                                     </div>
-                                    <div class="row">
-                                        <p id="pressure">1020 mb</p>
+                                    <div class="row" id="humidityParent">
+                                        <p>93%</p>
                                     </div>
                                 </div>
+                        
                                 <div class="col">
-                                    <img src="/xavieassets/dewpoint.png" alt="dew point thermometer icon" width="50px"
-                                        height="50px">
+                                    <img src="/xavieassets/visibility.png" alt="visibility icon" width="50px"
+                                        height="px">
                                 </div>
                                 <div class="col">
                                     <div class="row">
-                                        <p>Dew Point</p>
+                                        <p>Visibility</p>
                                     </div>
-                                    <div class="row">
-                                        <p  id="dewpoint">44°</p>
+                                    <div class="row" id="visibilityParent">
+                                        <p>13km</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="/xavieassets/chanceofrain.png" alt="chance of rain raindrop icon"
+                                            width="50px" height="50px">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <p>Chance of Rain</p>
+                                        </div>
+                                        <div class="row" id="chanceofrainParent">
+                                            <p>N/A</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <img src="/xavieassets/uv index.png" alt="UV index sun icon" width="50px"
+                                            height="50px">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <p>UV Index</p>
+                                        </div>
+                                        <div class="row" id="uvindexParent">
+                                            <p>N/A</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <img src="/xavieassets/pressure.png" alt="pressure barometer icon" width="50px"
+                                            height="50px">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <p>Pressure</p>
+                                        </div>
+                                        <div class="row" id="pressureParent">
+                                            <p>1020 mb</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <img src="/xavieassets/dewpoint.png" alt="dew point thermometer icon"
+                                            width="50px" height="50px">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row" id="dewpointParent">
+                                            <p>Dew Point</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>N/A</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2" id="mapParent"> <small>
+                        <div class="col-3" id="mapParent"> <small>
+                        </div>
                     </div>
                 </div>
         </main>
