@@ -49,7 +49,6 @@ const nameParent = document.getElementById("nameParent");
 
 
 let celsius = false;
-let isFilled = false;
 let units = "imperial";
 
 let forecastdata;
@@ -59,7 +58,10 @@ let todaymax;
 let todaymin;
 let city = searchbar.value.toLowerCase();
 let favoriteList = [];
-let favoriteItem;
+let name = "";
+let country;
+let favoriteItem = [];
+
 // --------------get data function start-------------------------------------------------------------------//
 
 const getLocation = () => {
@@ -186,22 +188,22 @@ const getLocation = () => {
 
                     day1Parent.innerHTML = "";
                     const day1P = document.createElement("p");
-                    day1P.textContent = days[dayIndex + 1];
+                    day1P.textContent = days[(dayIndex + 1) % days.length];
                     day1Parent.appendChild(day1P);
 
                     day2Parent.innerHTML = "";
                     const day2P = document.createElement("p");
-                    day2P.textContent = days[dayIndex + 2];
+                    day2P.textContent = days[(dayIndex + 2) % days.length];
                     day2Parent.appendChild(day2P);
 
                     day3Parent.innerHTML = "";
                     const day3P = document.createElement("p");
-                    day3P.textContent = days[dayIndex + 3];
+                    day3P.textContent = days[(dayIndex + 3) % days.length];
                     day3Parent.appendChild(day3P);
 
                     day4Parent.innerHTML = "";
                     const day4P = document.createElement("p");
-                    day4P.textContent = days[dayIndex + 4];
+                    day4P.textContent = days[(dayIndex + 4) % days.length];
                     day4Parent.appendChild(day4P);
 
                     date0Parent.innerHTML = "";
@@ -229,33 +231,29 @@ const getLocation = () => {
                     date4P.textContent = (dayOfMonth + 4);
                     date4Parent.appendChild(date4P);
 
-                    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}`).then((response) => response.json()).then(data => {
-                        data;
-                        let weatherdata = data;
-                    })
+                    const map = document.createElement("div")
+                    mapParent.innerHTML = "";
+                    map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+                    mapParent.appendChild(map);
 
                 })
 
-
-            const map = document.createElement("div")
-            mapParent.innerHTML = "";
-            map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
-            mapParent.appendChild(map);
         })
 }
 
 
 // Function to fetch coordinates
 function getCoordinatesByCity(city) {
-    city = searchbar.value.toLowerCase();
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIKey}`)
         .then((response) => response.json())
         .then(data => {
             data;
             citydata = data;
             if (citydata.length > 0) {
-                let { lat, lon, name, country } = citydata[0];
-
+                name = citydata[0].name;
+                country = citydata[0].country;
+                lat = citydata[0].lat;
+                lon = citydata[0].lon;
                 if (celsius == false) { units = "imperial" }
                 else { units = "metric" }
                 fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`).then((response) => response.json())
@@ -373,29 +371,24 @@ function getCoordinatesByCity(city) {
 
                         const dayOfMonth = today.getDate();
 
-                        day0Parent.innerHTML = "";
-                        const day0P = document.createElement("p");
-                        day0P.textContent = days[dayIndex];
-                        day0Parent.appendChild(day0P);
-
                         day1Parent.innerHTML = "";
                         const day1P = document.createElement("p");
-                        day1P.textContent = days[dayIndex + 1];
+                        day1P.textContent = days[(dayIndex + 1) % days.length];
                         day1Parent.appendChild(day1P);
 
                         day2Parent.innerHTML = "";
                         const day2P = document.createElement("p");
-                        day2P.textContent = days[dayIndex + 2];
+                        day2P.textContent = days[(dayIndex + 2) % days.length];
                         day2Parent.appendChild(day2P);
 
                         day3Parent.innerHTML = "";
                         const day3P = document.createElement("p");
-                        day3P.textContent = days[dayIndex + 3];
+                        day3P.textContent = days[(dayIndex + 3) % days.length];
                         day3Parent.appendChild(day3P);
 
                         day4Parent.innerHTML = "";
                         const day4P = document.createElement("p");
-                        day4P.textContent = days[dayIndex + 4];
+                        day4P.textContent = days[(dayIndex + 4) % days.length];
                         day4Parent.appendChild(day4P);
 
                         date0Parent.innerHTML = "";
@@ -426,7 +419,7 @@ function getCoordinatesByCity(city) {
 
                 const map = document.createElement("div")
                 mapParent.innerHTML = "";
-                map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+                map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
                 mapParent.appendChild(map);
             }
 
@@ -448,9 +441,6 @@ const getLocalName = () => {
             fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}`).then((response) => response.json())
                 .then(data => {
                     data;
-                    let namedata = data;
-                    console.log(data.name)
-
                     nameParent.innerHTML = "";
                     const cityP = document.createElement("p");
                     cityP.textContent = data.name;
@@ -462,24 +452,19 @@ const getLocalName = () => {
 
 
 
+const getLocalStorage = (name, lat, lon) => {
+    favoriteItem = localStorage.getItem("Favorite");
 
-
-
-const getLocalStorage = () => {
-    favoriteItem = localStorage.getItem("Grocery Items");
-
-    if(favoriteItem === null)
-    {return []};
+    if (favoriteItem === null) { return [] };
     return JSON.parse(favoriteItem);
 }
 
 const saveToStorage = (favoriteItem) => {
     let favoriteList = getLocalStorage();
-
-    if(!favoriteList.includes(favoriteItem)){
+    if (!favoriteList.includes(favoriteItem)) {
         favoriteList.push(favoriteItem);
     }
-localStorage.setItem("Grocery Items", JSON.stringify(favoriteList))
+    localStorage.setItem("Favorite", JSON.stringify(favoriteList))
 }
 
 const removeFromStorage = (favoriteItem) => {
@@ -487,34 +472,8 @@ const removeFromStorage = (favoriteItem) => {
     let favoriteIndex = favoriteList.indexOf(favoriteItem);
     favoriteList.splice(favoriteIndex, 1);
 
-    localStorage.setItem("Grocery Items", JSON.stringify(favoriteList));
+    localStorage.setItem("Favorite", JSON.stringify(favoriteList));
 }
-
-
-// const getLocalStorage = () => {
-//     favorites = localStorage.getItem("Favorites");
-
-//     if (favorites === null) { return [] };
-//     return JSON.parse(favorites);
-// }
-
-// const saveToStorage = (favorite) => {
-//     favorites = getLocalStorage();
-
-//     if (!favorites.includes(favorite)) {
-//         favorites.push(favorite);
-//     }
-//     localStorage.setItem("Favorites", JSON.stringify(favorites))
-// }
-
-// const removeFromStorage = (favorite) => {
-//     let favorites = getLocalStorage();
-//     let favoriteIndex = favorites.indexOf(favorite);
-//     favorites.splice(favoriteIndex, 1);
-//     isFilled = !isFilled;
-//     starBtn.src = "/xavieassets/star.png";
-//     localStorage.setItem("Favorites", JSON.stringify(favorites));
-// }
 
 function DisplayFavorite() {
 
@@ -523,13 +482,21 @@ function DisplayFavorite() {
     favoriteList.forEach(favoriteItem => {
         let p = document.createElement("p");
         p.textContent = favoriteItem;
-
         const deleteBtn = document.createElement("span");
         deleteBtn.innerHTML = `<img src="/xavieassets/star filled.png" alt="remove favorite star icon" width="20px" height="20px">`;
+
 
         deleteBtn.addEventListener("click", () => {
             removeFromStorage();
             p.remove();
+
+        })
+
+        p.addEventListener("click", () => {
+            city = favoriteItem;
+            getCoordinatesByCity(city);
+            console.log(city)
+
         })
 
         p.appendChild(deleteBtn);
@@ -573,26 +540,22 @@ button.addEventListener("click", () => {
     // Check if the browser supports geolocation
     getLocation();
     getLocalName();
+    DisplayFavorite();
 
 });
 
 
 searchbar.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
+        city = searchbar.value.toLowerCase();
         getCoordinatesByCity(city);
     }
 })
 
 starBtn.addEventListener("click", () => {
-    isFilled = !isFilled;
-    if (isFilled) {
-        starBtn.src = "/xavieassets/star.png";
-    } else {
-        starBtn.src = "/xavieassets/star filled.png";
-        getLocalStorage();
-        saveToStorage({ city });
-        DisplayFavorite();
-    }
+    getLocalStorage();
+    saveToStorage(name);
+    DisplayFavorite();
 });
 
 grayBtn.addEventListener("click", () => {
