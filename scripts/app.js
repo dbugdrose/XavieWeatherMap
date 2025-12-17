@@ -43,6 +43,7 @@ const date1Parent = document.getElementById("date1Parent");
 const date2Parent = document.getElementById("date2Parent");
 const date3Parent = document.getElementById("date3Parent");
 const date4Parent = document.getElementById("date4Parent");
+const nameParent = document.getElementById("nameParent");
 
 
 
@@ -51,23 +52,14 @@ let celsius = false;
 let isFilled = false;
 let units = "imperial";
 
-let weatherdata;
 let forecastdata;
 let citydata;
-let celsiusTemp;
-let fahrenheitTemp;
 let todaytemp;
 let todaymax;
 let todaymin;
-let data;
 let city = searchbar.value.toLowerCase();
-let stateCode;
-let countryCode;
-let favorite = city;
-let favorites = [];
-const limit = 1;
-const geocodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${limit}&appid=${APIKey}`;
-
+let favoriteList = [];
+let favoriteItem;
 // --------------get data function start-------------------------------------------------------------------//
 
 const getLocation = () => {
@@ -98,8 +90,6 @@ const getLocation = () => {
                     let visibility = forecastdata.list[0].visibility;
                     let pressure = forecastdata.list[0].main.pressure;
                     let humidity = forecastdata.list[0].main.humidity;
-                    let city = forecastdata.list[0].name;
-
 
                     maintemp.innerHTML = "";
                     const todaytempP = document.createElement("p");
@@ -238,7 +228,14 @@ const getLocation = () => {
                     const date4P = document.createElement("p");
                     date4P.textContent = (dayOfMonth + 4);
                     date4Parent.appendChild(date4P);
+
+                    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}`).then((response) => response.json()).then(data => {
+                        data;
+                        let weatherdata = data;
+                    })
+
                 })
+
 
             const map = document.createElement("div")
             mapParent.innerHTML = "";
@@ -251,71 +248,281 @@ const getLocation = () => {
 // Function to fetch coordinates
 function getCoordinatesByCity(city) {
     city = searchbar.value.toLowerCase();
-    try {
-        fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIKey}`)
-            .then((response) => response.json())
-            .then(data => {
-                data;
-                citydata = data;
-                console.log(citydata);
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIKey}`)
+        .then((response) => response.json())
+        .then(data => {
+            data;
+            citydata = data;
+            if (citydata.length > 0) {
+                let { lat, lon, name, country } = citydata[0];
 
-                if (citydata.length > 0) {
-                    let { lat, lon, name, country } = citydata[0];
-                    console.log(`Coordinates for ${name}, ${country}: Latitude = ${lat}, Longitude = ${lon}`);
-                } else {
-                    console.log("City not found.");
-                    return null;
-                }
-            })
-    } catch (error) {
-        console.error("Error fetching geocoding data:", error);
-        return null;
-    }
+                if (celsius == false) { units = "imperial" }
+                else { units = "metric" }
+                fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`).then((response) => response.json())
+                    .then(data => {
+                        data;
+                        forecastdata = data;
+
+                        todaytemp = forecastdata.list[0].main.temp;
+                        todaymax = forecastdata.list[0].main.temp_max;
+                        todaymin = forecastdata.list[0].main.temp_min;
+                        let min2 = forecastdata.list[1].main.temp_min;
+                        let max2 = forecastdata.list[1].main.temp_max;
+                        let min3 = forecastdata.list[2].main.temp_min;
+                        let max3 = forecastdata.list[2].main.temp_max;
+                        let min4 = forecastdata.list[3].main.temp_min;
+                        let max4 = forecastdata.list[3].main.temp_max;
+                        let min5 = forecastdata.list[4].main.temp_min;
+                        let max5 = forecastdata.list[4].main.temp_max;
+                        let realfeel = forecastdata.list[0].main.feels_like;
+                        let wind = forecastdata.list[0].wind.speed;
+                        let visibility = forecastdata.list[0].visibility;
+                        let pressure = forecastdata.list[0].main.pressure;
+                        let humidity = forecastdata.list[0].main.humidity;
+
+                        nameParent.innerHTML = "";
+                        const cityP = document.createElement("p");
+                        cityP.textContent = name + ", " + country;
+                        nameParent.appendChild(cityP);
+
+                        maintemp.innerHTML = "";
+                        const todaytempP = document.createElement("p");
+                        todaytempP.textContent = Math.floor(todaytemp) + "°";
+                        maintemp.appendChild(todaytempP);
+
+
+                        todaymaxparent.innerHTML = "";
+                        const todaymaxP = document.createElement("p");
+                        todaymaxP.textContent = Math.floor(todaymax) + "°";
+                        todaymaxparent.appendChild(todaymaxP);
+
+                        todayminparent.innerHTML = "";
+                        const todayminP = document.createElement("p");
+                        todayminP.textContent = Math.floor(todaymin) + "°";
+                        todayminparent.appendChild(todayminP);
+
+                        min2parent.innerHTML = "";
+                        const min2P = document.createElement("p");
+                        min2P.textContent = Math.floor(min2) + "°";
+                        min2parent.appendChild(min2P);
+
+                        min3parent.innerHTML = "";
+                        const min3p = document.createElement("p");
+                        min3p.textContent = Math.floor(min3) + "°";
+                        min3parent.appendChild(min3p);
+
+                        max2parent.innerHTML = "";
+                        const max2P = document.createElement("p");
+                        max2P.textContent = Math.floor(max2) + "°";
+                        max2parent.appendChild(max2P);
+
+                        max3parent.innerHTML = "";
+                        const max3p = document.createElement("p");
+                        max3p.textContent = Math.floor(max3) + "°";
+                        max3parent.appendChild(max3p);
+
+                        min4parent.innerHTML = "";
+                        const min4P = document.createElement("p");
+                        min4P.textContent = Math.floor(min4) + "°";
+                        min4parent.appendChild(min4P);
+
+                        min5parent.innerHTML = "";
+                        const min5p = document.createElement("p");
+                        min5p.textContent = Math.floor(min5) + "°";
+                        min5parent.appendChild(min5p);
+
+                        max4parent.innerHTML = "";
+                        const max4P = document.createElement("p");
+                        max4P.textContent = Math.floor(max4) + "°";
+                        max4parent.appendChild(max4P);
+
+                        max5parent.innerHTML = "";
+                        const max5p = document.createElement("p");
+                        max5p.textContent = Math.floor(max5) + "°";
+                        max5parent.appendChild(max5p);
+
+                        windParent.innerHTML = "";
+                        const windP = document.createElement("p");
+                        if (celsius == false) { windP.textContent = wind + "mph"; }
+                        else { windP.textContent = wind + "km/hr"; }
+                        { windParent.appendChild(windP) }
+
+                        humidityParent.innerHTML = "";
+                        const humidityP = document.createElement("p");
+                        humidityP.textContent = humidity + "%";
+                        humidityParent.appendChild(humidityP);
+
+                        realfeelParent.innerHTML = "";
+                        const realfeelP = document.createElement("p");
+                        realfeelP.textContent = realfeel + "°";
+                        realfeelParent.appendChild(realfeelP);
+
+                        visibilityParent.innerHTML = "";
+                        const visibilityP = document.createElement("p");
+                        visibilityP.textContent = visibility;
+                        visibilityParent.appendChild(visibilityP);
+
+                        pressureParent.innerHTML = "";
+                        const pressureP = document.createElement("p");
+                        pressureP.textContent = pressure;
+                        pressureParent.appendChild(pressureP);
+
+                        const today = new Date();
+                        const dayIndex = today.getDay();
+                        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+                        const dayOfMonth = today.getDate();
+
+                        day0Parent.innerHTML = "";
+                        const day0P = document.createElement("p");
+                        day0P.textContent = days[dayIndex];
+                        day0Parent.appendChild(day0P);
+
+                        day1Parent.innerHTML = "";
+                        const day1P = document.createElement("p");
+                        day1P.textContent = days[dayIndex + 1];
+                        day1Parent.appendChild(day1P);
+
+                        day2Parent.innerHTML = "";
+                        const day2P = document.createElement("p");
+                        day2P.textContent = days[dayIndex + 2];
+                        day2Parent.appendChild(day2P);
+
+                        day3Parent.innerHTML = "";
+                        const day3P = document.createElement("p");
+                        day3P.textContent = days[dayIndex + 3];
+                        day3Parent.appendChild(day3P);
+
+                        day4Parent.innerHTML = "";
+                        const day4P = document.createElement("p");
+                        day4P.textContent = days[dayIndex + 4];
+                        day4Parent.appendChild(day4P);
+
+                        date0Parent.innerHTML = "";
+                        const date0P = document.createElement("p");
+                        date0P.textContent = (dayOfMonth);
+                        date0Parent.appendChild(date0P);
+
+                        date1Parent.innerHTML = "";
+                        const date1P = document.createElement("p");
+                        date1P.textContent = (dayOfMonth + 1);
+                        date1Parent.appendChild(date1P);
+
+                        date2Parent.innerHTML = "";
+                        const date2P = document.createElement("p");
+                        date2P.textContent = (dayOfMonth + 2);
+                        date2Parent.appendChild(date2P);
+
+                        date3Parent.innerHTML = "";
+                        const date3P = document.createElement("p");
+                        date3P.textContent = (dayOfMonth + 3);
+                        date3Parent.appendChild(date3P);
+
+                        date4Parent.innerHTML = "";
+                        const date4P = document.createElement("p");
+                        date4P.textContent = (dayOfMonth + 4);
+                        date4Parent.appendChild(date4P);
+                    })
+
+                const map = document.createElement("div")
+                mapParent.innerHTML = "";
+                map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+                mapParent.appendChild(map);
+            }
+
+            else {
+                console.log("City not found.");
+                return null;
+            }
+        })
 }
 
-async function getWeatherData(lat, lon) {
-    console.log(lat, lon)
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}&units=imperial`); // pauses here until fetch completes
-    const data = await response.json();
-    let coordinatecitydata = data;
+const getLocalName = () => {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
 
-    console.log("Weather data:", coordinatecitydata);
-    return coordinatecitydata;
+            if (celsius == false) { units = "imperial" }
+            else { units = "metric" }
+            fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}`).then((response) => response.json())
+                .then(data => {
+                    data;
+                    let namedata = data;
+                    console.log(data.name)
+
+                    nameParent.innerHTML = "";
+                    const cityP = document.createElement("p");
+                    cityP.textContent = data.name;
+                    nameParent.appendChild(cityP);
+
+                })
+        })
 }
+
+
+
+
 
 
 const getLocalStorage = () => {
-    favorites = localStorage.getItem("Favorites");
+    favoriteItem = localStorage.getItem("Grocery Items");
 
-    if (favorites === null) { return [] };
-    return JSON.parse(favorites);
+    if(favoriteItem === null)
+    {return []};
+    return JSON.parse(favoriteItem);
 }
 
-const saveToStorage = (favorite) => {
-    favorites = getLocalStorage();
+const saveToStorage = (favoriteItem) => {
+    let favoriteList = getLocalStorage();
 
-    if (!favorites.includes(favorite)) {
-        favorites.push(favorite);
+    if(!favoriteList.includes(favoriteItem)){
+        favoriteList.push(favoriteItem);
     }
-    localStorage.setItem("Favorites", JSON.stringify(favorites))
+localStorage.setItem("Grocery Items", JSON.stringify(favoriteList))
 }
 
-const removeFromStorage = (favorite) => {
-    let favorites = getLocalStorage();
-    let favoriteIndex = favorites.indexOf(favorite);
-    favorites.splice(favoriteIndex, 1);
-    isFilled = !isFilled;
-    starBtn.src = "/xavieassets/star.png";
-    localStorage.setItem("Favorites", JSON.stringify(favorites));
+const removeFromStorage = (favoriteItem) => {
+    let favoriteList = getLocalStorage();
+    let favoriteIndex = favoriteList.indexOf(favoriteItem);
+    favoriteList.splice(favoriteIndex, 1);
+
+    localStorage.setItem("Grocery Items", JSON.stringify(favoriteList));
 }
+
+
+// const getLocalStorage = () => {
+//     favorites = localStorage.getItem("Favorites");
+
+//     if (favorites === null) { return [] };
+//     return JSON.parse(favorites);
+// }
+
+// const saveToStorage = (favorite) => {
+//     favorites = getLocalStorage();
+
+//     if (!favorites.includes(favorite)) {
+//         favorites.push(favorite);
+//     }
+//     localStorage.setItem("Favorites", JSON.stringify(favorites))
+// }
+
+// const removeFromStorage = (favorite) => {
+//     let favorites = getLocalStorage();
+//     let favoriteIndex = favorites.indexOf(favorite);
+//     favorites.splice(favoriteIndex, 1);
+//     isFilled = !isFilled;
+//     starBtn.src = "/xavieassets/star.png";
+//     localStorage.setItem("Favorites", JSON.stringify(favorites));
+// }
 
 function DisplayFavorite() {
 
-    favorites = getLocalStorage();
+    favoriteList = getLocalStorage();
     favoritesParent.innerHTML = "";
-    favorites.forEach(favorite => {
+    favoriteList.forEach(favoriteItem => {
         let p = document.createElement("p");
-        p.textContent = favorite;
+        p.textContent = favoriteItem;
 
         const deleteBtn = document.createElement("span");
         deleteBtn.innerHTML = `<img src="/xavieassets/star filled.png" alt="remove favorite star icon" width="20px" height="20px">`;
@@ -365,6 +572,7 @@ function Gray() {
 button.addEventListener("click", () => {
     // Check if the browser supports geolocation
     getLocation();
+    getLocalName();
 
 });
 
@@ -372,9 +580,6 @@ button.addEventListener("click", () => {
 searchbar.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         getCoordinatesByCity(city);
-        getWeatherData(lat, lon);
-        console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-
     }
 })
 
