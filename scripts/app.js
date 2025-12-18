@@ -886,6 +886,8 @@ const getLocalStorage = (name, lat, lon) => {
 const saveToStorage = (favoriteItem) => {
     let favoriteList = getLocalStorage();
     if (!favoriteList.includes(favoriteItem)) {
+        if(favoriteList.length >= 3)
+        {favoriteList.shift();}
         favoriteList.push(favoriteItem);
     }
     localStorage.setItem("Favorite", JSON.stringify(favoriteList))
