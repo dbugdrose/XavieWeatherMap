@@ -44,6 +44,20 @@ const date2Parent = document.getElementById("date2Parent");
 const date3Parent = document.getElementById("date3Parent");
 const date4Parent = document.getElementById("date4Parent");
 const nameParent = document.getElementById("nameParent");
+const todayImage = document.getElementById("todayImage");
+const day0Image = document.getElementById("day0Image");
+const day1Image = document.getElementById("day1Image");
+const day2Image = document.getElementById("day2Image");
+const day3Image = document.getElementById("day3Image");
+const day4Image = document.getElementById("day4Image");
+let min2 = 100000;
+let max2 = 0;
+let min3 = 100000;
+let max3 = 0;
+let min4 = 100000;
+let max4 = 0;
+let min5 = 100000;
+let max5 = 0;
 
 
 
@@ -77,21 +91,63 @@ const getLocation = () => {
                     data;
                     forecastdata = data;
                     todaytemp = forecastdata.list[0].main.temp;
-                    todaymax = forecastdata.list[0].main.temp_max;
-                    todaymin = forecastdata.list[0].main.temp_min;
-                    let min2 = forecastdata.list[1].main.temp_min;
-                    let max2 = forecastdata.list[1].main.temp_max;
-                    let min3 = forecastdata.list[2].main.temp_min;
-                    let max3 = forecastdata.list[2].main.temp_max;
-                    let min4 = forecastdata.list[3].main.temp_min;
-                    let max4 = forecastdata.list[3].main.temp_max;
-                    let min5 = forecastdata.list[4].main.temp_min;
-                    let max5 = forecastdata.list[4].main.temp_max;
+                    todaymax;
+                    todaymin;
                     let realfeel = forecastdata.list[0].main.feels_like;
                     let wind = forecastdata.list[0].wind.speed;
                     let visibility = forecastdata.list[0].visibility;
                     let pressure = forecastdata.list[0].main.pressure;
                     let humidity = forecastdata.list[0].main.humidity;
+
+                    for (let i = 0; i < 8; i++) {
+                        if (todaymin > forecastdata.list[i].main.temp_min) {
+                            todaymin = forecastdata.list[i].main.temp_min
+                        }
+                        if (todaymax < forecastdata.list[i].main.temp_max) {
+                            todaymax = forecastdata.list[i].main.temp_max
+                        }
+                    }
+
+                    for (let i = 8; i < 16; i++) {
+                        if (min1 > forecastdata.list[i].main.temp_min) {
+                            min1 = forecastdata.list[i].main.temp_min
+                        }
+                        if (max1 < forecastdata.list[i].main.temp_max) {
+                            max1 = forecastdata.list[i].main.temp_max
+                        }
+                    }
+                    highTempFore2.innerText = highTemp2 + "°F"
+                    lowTempFore2.innerText = lowTemp2 + "°F"
+                    for (let i = 16; i < 24; i++) {
+                        if (min2 > forecastdata.list[i].main.temp_min) {
+                            min2 = forecastdata.list[i].main.temp_min
+                        }
+                        if (max2 < forecastdata.list[i].main.temp_max) {
+                            max2 = forecastdata.list[i].main.temp_max
+                        }
+                    }
+
+                    for (let i = 24; i < 32; i++) {
+                        if (min3 > forecastdata.list[i].main.temp_min) {
+                            min3 = forecastdata.list[i].main.temp_min
+                        }
+                        if (max3 < forecastdata.list[i].main.temp_max) {
+                            max3 = forecastdata.list[i].main.temp_max
+                        }
+                    }
+
+                    for (let i = 32; i < 40; i++) {
+                        if (min4 > forecastdata.list[i].main.temp_min) {
+                            min4 = forecastdata.list[i].main.temp_min
+                        }
+                        if (max4 < forecastdata.list[i].main.temp_max) {
+                            max4 = forecastdata.list[i].main.temp_max
+                        }
+                    }
+
+
+
+
 
                     maintemp.innerHTML = "";
                     const todaytempP = document.createElement("p");
@@ -236,10 +292,30 @@ const getLocation = () => {
                     map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
                     mapParent.appendChild(map);
 
-                })
 
+                    if (forecastdata.list[0].weather.main == "Clouds") {
+                        day0Image.src = "/xavieassets/cloudy.png";
+                        todayImage.src = "/xavieassets/cloudy.png";
+                    }
+                    else if (forecastdata.list[0].weather.main == "Snow") {
+                        day0Image.src = "/xavieassets/snowing.png";
+                        todayImage.src = "/xavieassets/snowing.png";
+
+                    }
+                    else if (forecastdata.list[0].weather.main == "Rain") {
+                        day0Image.src = "/xavieassets/rain-drops.png";
+                        todayImage.src = "/xavieassets/rain-drops.png";
+
+                    }
+                    else {
+                        day0Image.src = "/xavieassets/sunny.png";
+                        todayImage.src = "/xavieassets/sunny.png";
+
+                    }
+                })
         })
 }
+
 
 
 // Function to fetch coordinates
@@ -277,6 +353,7 @@ function getCoordinatesByCity(city) {
                         let visibility = forecastdata.list[0].visibility;
                         let pressure = forecastdata.list[0].main.pressure;
                         let humidity = forecastdata.list[0].main.humidity;
+
 
                         nameParent.innerHTML = "";
                         const cityP = document.createElement("p");
