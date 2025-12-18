@@ -73,6 +73,8 @@ let todaytemp;
 let city = searchbar.value.toLowerCase();
 let favoriteList = [];
 let name = "";
+let stateCode = "";
+let countryCode = "";
 let country;
 let favoriteItem = [];
 let wind;
@@ -80,6 +82,7 @@ let realfeel;
 let pressure;
 let humidity;
 let visibility;
+
 
 // --------------get data function start-------------------------------------------------------------------//
 
@@ -89,11 +92,20 @@ const getLocation = () => {
             lat = position.coords.latitude;
             lon = position.coords.longitude;
 
+            let todaymin = 100000;
+            todaymax = -100000;
+            min2 = 100000;
+            max2 = -100000;
+            min3 = 100000;
+            max3 = -100000;
+            min4 = 100000;
+            max4 = -100000;
+            min5 = 100000;
+            max5 = -100000;
             if (celsius == false) { units = "imperial" }
             else { units = "metric" }
             fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`).then((response) => response.json())
                 .then(data => {
-                    data;
                     forecastdata = data;
                     todaytemp = forecastdata.list[0].main.temp;
                     realfeel = forecastdata.list[0].main.feels_like;
@@ -103,161 +115,49 @@ const getLocation = () => {
                     humidity = forecastdata.list[0].main.humidity;
 
 
-
-                    if (day0Image || todayImage) {
-                        if (forecastdata.list[0].weather[0].id > 800 && forecastdata.list[0].weather[0].id < 805) {
-                            day0Image.src = "/xavieassets/cloudy.png";
-                            todayImage.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 599 && forecastdata.list[0].weather[0].id < 625) {
-                            day0Image.src = "/xavieassets/snowing.png";
-                            todayImage.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 299 && forecastdata.list[0].weather[0].id < 540) {
-                            day0Image.src = "/xavieassets/rain-drops.png";
-                            todayImage.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 699 && forecastdata.list[0].weather[0].id < 790) {
-                            day0Image.src = "/xavieassets/mist.png";
-                            todayImage.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 199 && forecastdata.list[0].weather[0].id < 240) {
-                            day0Image.src = "/xavieassets/mist.png";
-                            todayImage.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[0].weather[0].id == 800) {
-                            day0Image.src = "/xavieassets/sunny.png";
-                            todayImage.src = "/xavieassets/sunny.png";
-
-                        }
-
-
-                    }
-
-                    if (day1Image) {
-                        if (forecastdata.list[8].weather[0].id > 800 && forecastdata.list[8].weather[0].id < 805) {
-                            day1Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 599 && forecastdata.list[8].weather[0].id < 625) {
-                            day1Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 299 && forecastdata.list[8].weather[0].id < 540) {
-                            day1Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 699 && forecastdata.list[8].weather[0].id < 790) {
-                            day1Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 199 && forecastdata.list[8].weather[0].id < 240) {
-                            day1Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[8].weather[0].id == 800) {
-                            day1Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[8].weather[0].id)
-
-                    }
-
-                    if (day2Image) {
-                        if (forecastdata.list[16].weather[0].id > 800 && forecastdata.list[16].weather[0].id < 805) {
-                            day2Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 599 && forecastdata.list[16].weather[0].id < 625) {
-                            day2Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 299 && forecastdata.list[16].weather[0].id < 540) {
-                            day2Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 699 && forecastdata.list[16].weather[0].id < 790) {
-                            day2Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 199 && forecastdata.list[16].weather[0].id < 240) {
-                            day2Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[16].weather[0].id == 800) {
-                            day2Image.src = "/xavieassets/sunny.png";
-
-                        }
-
-                    }
-                    if (day3Image) {
-                        if (forecastdata.list[24].weather[0].id > 800 && forecastdata.list[24].weather[0].id < 805) {
-                            day3Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 599 && forecastdata.list[24].weather[0].id < 625) {
-                            day3Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 299 && forecastdata.list[24].weather[0].id < 540) {
-                            day3Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 699 && forecastdata.list[24].weather[0].id < 790) {
-                            day3Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 199 && forecastdata.list[24].weather[0].id < 240) {
-                            day3Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[24].weather[0].id == 800) {
-                            day3Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[24].weather[0].id)
-
-                    }
-                    if (day4Image) {
-                        if (forecastdata.list[32].weather[0].id > 800 && forecastdata.list[32].weather[0].id < 805) {
-                            day4Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 599 && forecastdata.list[32].weather[0].id < 625) {
-                            day4Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 299 && forecastdata.list[32].weather[0].id < 540) {
-                            day4Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 699 && forecastdata.list[32].weather[0].id < 790) {
-                            day4Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 199 && forecastdata.list[32].weather[0].id < 240) {
-                            day4Image.src = "/xavieassets/mist.png";
-
-                        }
-                        
-                        else if (forecastdata.list[32].weather[0].id == 800){
-                            day4Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[32].weather[0].id)
-
-                    }
-
                     for (let i = 0; i < 8; i++) {
+
                         if (todaymin > forecastdata.list[i].main.temp_min) {
-                            todaymin = forecastdata.list[i].main.temp_min
+                            todaymin = forecastdata.list[i].main.temp_min;
+                            console.log("this is working")
                         }
                         if (todaymax < forecastdata.list[i].main.temp_max) {
                             todaymax = forecastdata.list[i].main.temp_max
+                        }
+
+                        if (day0Image || todayImage) {
+                            if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                day0Image.src = "/xavieassets/cloudy.png";
+                                todayImage.src = "/xavieassets/cloudy.png";
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                day0Image.src = "/xavieassets/snowing.png";
+                                todayImage.src = "/xavieassets/snowing.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                day0Image.src = "/xavieassets/rain-drops.png";
+                                todayImage.src = "/xavieassets/rain-drops.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                day0Image.src = "/xavieassets/mist.png";
+                                todayImage.src = "/xavieassets/mist.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                day0Image.src = "/xavieassets/mist.png";
+                                todayImage.src = "/xavieassets/mist.png";
+
+                            }
+
+                            else {
+                                day0Image.src = "/xavieassets/sunny.png";
+                                todayImage.src = "/xavieassets/sunny.png";
+
+                            }
+
+
                         }
                     }
 
@@ -268,6 +168,33 @@ const getLocation = () => {
                         if (max2 < forecastdata.list[i].main.temp_max) {
                             max2 = forecastdata.list[i].main.temp_max
                         }
+                        if (day1Image) {
+                            if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                day1Image.src = "/xavieassets/cloudy.png";
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                day1Image.src = "/xavieassets/snowing.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                day1Image.src = "/xavieassets/rain-drops.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                day1Image.src = "/xavieassets/mist.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                day1Image.src = "/xavieassets/mist.png";
+
+                            }
+
+                            else if (forecastdata.list[i].weather[0].id == 800) {
+                                day1Image.src = "/xavieassets/sunny.png";
+
+                            }
+
+                        }
                     }
 
                     for (let i = 16; i < 24; i++) {
@@ -276,6 +203,33 @@ const getLocation = () => {
                         }
                         if (max3 < forecastdata.list[i].main.temp_max) {
                             max3 = forecastdata.list[i].main.temp_max
+                        }
+                        if (day2Image) {
+                            if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                day2Image.src = "/xavieassets/cloudy.png";
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                day2Image.src = "/xavieassets/snowing.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                day2Image.src = "/xavieassets/rain-drops.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                day2Image.src = "/xavieassets/mist.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                day2Image.src = "/xavieassets/mist.png";
+
+                            }
+
+                            else if (forecastdata.list[i].weather[0].id == 800) {
+                                day2Image.src = "/xavieassets/sunny.png";
+
+                            }
+
                         }
                     }
 
@@ -286,6 +240,33 @@ const getLocation = () => {
                         if (max4 < forecastdata.list[i].main.temp_max) {
                             max4 = forecastdata.list[i].main.temp_max
                         }
+                        if (day3Image) {
+                            if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                day3Image.src = "/xavieassets/cloudy.png";
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                day3Image.src = "/xavieassets/snowing.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                day3Image.src = "/xavieassets/rain-drops.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                day3Image.src = "/xavieassets/mist.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                day3Image.src = "/xavieassets/mist.png";
+
+                            }
+
+                            else if (forecastdata.list[i].weather[0].id == 800) {
+                                day3Image.src = "/xavieassets/sunny.png";
+
+                            }
+
+                        }
                     }
 
                     for (let i = 32; i < 40; i++) {
@@ -295,17 +276,42 @@ const getLocation = () => {
                         if (max5 < forecastdata.list[i].main.temp_max) {
                             max5 = forecastdata.list[i].main.temp_max
                         }
+                        if (day4Image) {
+                            if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                day4Image.src = "/xavieassets/cloudy.png";
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                day4Image.src = "/xavieassets/snowing.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                day4Image.src = "/xavieassets/rain-drops.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                day4Image.src = "/xavieassets/mist.png";
+
+                            }
+                            else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                day4Image.src = "/xavieassets/mist.png";
+
+                            }
+
+                            else if (forecastdata.list[i].weather[0].id == 800) {
+                                day4Image.src = "/xavieassets/sunny.png";
+
+                            }
+
+                        }
                     }
-
-
 
 
 
                     maintemp.innerHTML = "";
                     const todaytempP = document.createElement("p");
-                    todaytempP.textContent = Math.floor(todaytemp) + "°";
+                    if (units = "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                    else { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
                     maintemp.appendChild(todaytempP);
-
 
                     todaymaxparent.innerHTML = "";
                     const todaymaxP = document.createElement("p");
@@ -444,6 +450,7 @@ const getLocation = () => {
                     map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
                     mapParent.appendChild(map);
 
+
                 })
 
         })
@@ -452,9 +459,10 @@ const getLocation = () => {
 
 
 
+
 // Function to fetch coordinates
 function getCoordinatesByCity(city) {
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIKey}`)
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${stateCode},${countryCode}&limit=1&appid=${APIKey}`)
         .then((response) => response.json())
         .then(data => {
             data;
@@ -468,164 +476,17 @@ function getCoordinatesByCity(city) {
                 else { units = "metric" }
                 fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`).then((response) => response.json())
                     .then(data => {
+
                         data;
-                    forecastdata = data;
-                    todaytemp = forecastdata.list[0].main.temp;
-                    realfeel = forecastdata.list[0].main.feels_like;
-                    wind = forecastdata.list[0].wind.speed;
-                    visibility = forecastdata.list[0].visibility;
-                    pressure = forecastdata.list[0].main.pressure;
-                    humidity = forecastdata.list[0].main.humidity;
+                        forecastdata = data;
+                        todaytemp = forecastdata.list[0].main.temp;
+                        realfeel = forecastdata.list[0].main.feels_like;
+                        wind = forecastdata.list[0].wind.speed;
+                        visibility = forecastdata.list[0].visibility;
+                        pressure = forecastdata.list[0].main.pressure;
+                        humidity = forecastdata.list[0].main.humidity;
 
 
-
-                    if (day0Image || todayImage) {
-                        if (forecastdata.list[0].weather[0].id > 800 && forecastdata.list[0].weather[0].id < 805) {
-                            day0Image.src = "/xavieassets/cloudy.png";
-                            todayImage.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 599 && forecastdata.list[0].weather[0].id < 625) {
-                            day0Image.src = "/xavieassets/snowing.png";
-                            todayImage.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 299 && forecastdata.list[0].weather[0].id < 540) {
-                            day0Image.src = "/xavieassets/rain-drops.png";
-                            todayImage.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 699 && forecastdata.list[0].weather[0].id < 790) {
-                            day0Image.src = "/xavieassets/mist.png";
-                            todayImage.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[0].weather[0].id > 199 && forecastdata.list[0].weather[0].id < 240) {
-                            day0Image.src = "/xavieassets/mist.png";
-                            todayImage.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[0].weather[0].id == 800) {
-                            day0Image.src = "/xavieassets/sunny.png";
-                            todayImage.src = "/xavieassets/sunny.png";
-
-                        }
-
-
-                    }
-
-                    if (day1Image) {
-                        if (forecastdata.list[8].weather[0].id > 800 && forecastdata.list[8].weather[0].id < 805) {
-                            day1Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 599 && forecastdata.list[8].weather[0].id < 625) {
-                            day1Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 299 && forecastdata.list[8].weather[0].id < 540) {
-                            day1Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 699 && forecastdata.list[8].weather[0].id < 790) {
-                            day1Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[8].weather[0].id > 199 && forecastdata.list[8].weather[0].id < 240) {
-                            day1Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[8].weather[0].id == 800) {
-                            day1Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[8].weather[0].id)
-
-                    }
-
-                    if (day2Image) {
-                        if (forecastdata.list[16].weather[0].id > 800 && forecastdata.list[16].weather[0].id < 805) {
-                            day2Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 599 && forecastdata.list[16].weather[0].id < 625) {
-                            day2Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 299 && forecastdata.list[16].weather[0].id < 540) {
-                            day2Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 699 && forecastdata.list[16].weather[0].id < 790) {
-                            day2Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[16].weather[0].id > 199 && forecastdata.list[16].weather[0].id < 240) {
-                            day2Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[16].weather[0].id == 800) {
-                            day2Image.src = "/xavieassets/sunny.png";
-
-                        }
-
-                    }
-                    if (day3Image) {
-                        if (forecastdata.list[24].weather[0].id > 800 && forecastdata.list[24].weather[0].id < 805) {
-                            day3Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 599 && forecastdata.list[24].weather[0].id < 625) {
-                            day3Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 299 && forecastdata.list[24].weather[0].id < 540) {
-                            day3Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 699 && forecastdata.list[24].weather[0].id < 790) {
-                            day3Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[24].weather[0].id > 199 && forecastdata.list[24].weather[0].id < 240) {
-                            day3Image.src = "/xavieassets/mist.png";
-
-                        }
-
-                        else if (forecastdata.list[24].weather[0].id == 800) {
-                            day3Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[24].weather[0].id)
-
-                    }
-                    if (day4Image) {
-                        if (forecastdata.list[32].weather[0].id > 800 && forecastdata.list[32].weather[0].id < 805) {
-                            day4Image.src = "/xavieassets/cloudy.png";
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 599 && forecastdata.list[32].weather[0].id < 625) {
-                            day4Image.src = "/xavieassets/snowing.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 299 && forecastdata.list[32].weather[0].id < 540) {
-                            day4Image.src = "/xavieassets/rain-drops.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 699 && forecastdata.list[32].weather[0].id < 790) {
-                            day4Image.src = "/xavieassets/mist.png";
-
-                        }
-                        else if (forecastdata.list[32].weather[0].id > 199 && forecastdata.list[32].weather[0].id < 240) {
-                            day4Image.src = "/xavieassets/mist.png";
-
-                        }
-                        
-                        else if (forecastdata.list[32].weather[0].id == 800){
-                            day4Image.src = "/xavieassets/sunny.png";
-
-                        }
-                        console.log(forecastdata.list[32].weather[0].id)
-
-                    }
 
                         for (let i = 0; i < 8; i++) {
                             if (todaymin > forecastdata.list[i].main.temp_min) {
@@ -633,6 +494,41 @@ function getCoordinatesByCity(city) {
                             }
                             if (todaymax < forecastdata.list[i].main.temp_max) {
                                 todaymax = forecastdata.list[i].main.temp_max
+                            }
+
+                            if (day0Image || todayImage) {
+                                if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                    day0Image.src = "/xavieassets/cloudy.png";
+                                    todayImage.src = "/xavieassets/cloudy.png";
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                    day0Image.src = "/xavieassets/snowing.png";
+                                    todayImage.src = "/xavieassets/snowing.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                    day0Image.src = "/xavieassets/rain-drops.png";
+                                    todayImage.src = "/xavieassets/rain-drops.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                    day0Image.src = "/xavieassets/mist.png";
+                                    todayImage.src = "/xavieassets/mist.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                    day0Image.src = "/xavieassets/mist.png";
+                                    todayImage.src = "/xavieassets/mist.png";
+
+                                }
+
+                                else {
+                                    day0Image.src = "/xavieassets/sunny.png";
+                                    todayImage.src = "/xavieassets/sunny.png";
+
+                                }
+
+
                             }
                         }
 
@@ -643,6 +539,33 @@ function getCoordinatesByCity(city) {
                             if (max2 < forecastdata.list[i].main.temp_max) {
                                 max2 = forecastdata.list[i].main.temp_max
                             }
+                            if (day1Image) {
+                                if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                    day1Image.src = "/xavieassets/cloudy.png";
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                    day1Image.src = "/xavieassets/snowing.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                    day1Image.src = "/xavieassets/rain-drops.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                    day1Image.src = "/xavieassets/mist.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                    day1Image.src = "/xavieassets/mist.png";
+
+                                }
+
+                                else if (forecastdata.list[i].weather[0].id == 800) {
+                                    day1Image.src = "/xavieassets/sunny.png";
+
+                                }
+
+                            }
                         }
 
                         for (let i = 16; i < 24; i++) {
@@ -651,6 +574,33 @@ function getCoordinatesByCity(city) {
                             }
                             if (max3 < forecastdata.list[i].main.temp_max) {
                                 max3 = forecastdata.list[i].main.temp_max
+                            }
+                            if (day2Image) {
+                                if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                    day2Image.src = "/xavieassets/cloudy.png";
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                    day2Image.src = "/xavieassets/snowing.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                    day2Image.src = "/xavieassets/rain-drops.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                    day2Image.src = "/xavieassets/mist.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                    day2Image.src = "/xavieassets/mist.png";
+
+                                }
+
+                                else if (forecastdata.list[i].weather[0].id == 800) {
+                                    day2Image.src = "/xavieassets/sunny.png";
+
+                                }
+
                             }
                         }
 
@@ -661,6 +611,33 @@ function getCoordinatesByCity(city) {
                             if (max4 < forecastdata.list[i].main.temp_max) {
                                 max4 = forecastdata.list[i].main.temp_max
                             }
+                            if (day3Image) {
+                                if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                    day3Image.src = "/xavieassets/cloudy.png";
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                    day3Image.src = "/xavieassets/snowing.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                    day3Image.src = "/xavieassets/rain-drops.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                    day3Image.src = "/xavieassets/mist.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                    day3Image.src = "/xavieassets/mist.png";
+
+                                }
+
+                                else if (forecastdata.list[i].weather[0].id == 800) {
+                                    day3Image.src = "/xavieassets/sunny.png";
+
+                                }
+
+                            }
                         }
 
                         for (let i = 32; i < 40; i++) {
@@ -670,10 +647,36 @@ function getCoordinatesByCity(city) {
                             if (max5 < forecastdata.list[i].main.temp_max) {
                                 max5 = forecastdata.list[i].main.temp_max
                             }
+                            if (day4Image) {
+                                if (forecastdata.list[i].weather[0].id > 800 && forecastdata.list[i].weather[0].id < 805) {
+                                    day4Image.src = "/xavieassets/cloudy.png";
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 599 && forecastdata.list[i].weather[0].id < 625) {
+                                    day4Image.src = "/xavieassets/snowing.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 299 && forecastdata.list[i].weather[0].id < 540) {
+                                    day4Image.src = "/xavieassets/rain-drops.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 699 && forecastdata.list[i].weather[0].id < 790) {
+                                    day4Image.src = "/xavieassets/mist.png";
+
+                                }
+                                else if (forecastdata.list[i].weather[0].id > 199 && forecastdata.list[i].weather[0].id < 240) {
+                                    day4Image.src = "/xavieassets/mist.png";
+
+                                }
+
+                                else if (forecastdata.list[i].weather[0].id == 800) {
+                                    day4Image.src = "/xavieassets/sunny.png";
+
+                                }
+
+                            }
                         }
 
-                       
-
+                        console.log("this is working")
                         nameParent.innerHTML = "";
                         const cityP = document.createElement("p");
                         cityP.textContent = name + ", " + country;
@@ -683,7 +686,6 @@ function getCoordinatesByCity(city) {
                         const todaytempP = document.createElement("p");
                         todaytempP.textContent = Math.floor(todaytemp) + "°";
                         maintemp.appendChild(todaytempP);
-
 
                         todaymaxparent.innerHTML = "";
                         const todaymaxP = document.createElement("p");

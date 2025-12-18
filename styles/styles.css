@@ -77,6 +77,8 @@ font-weight: 600;
 
 .maintemp {
     font-size: 150px;
+    display: flex;
+    flex-direction: row;
 }
 
 .customCard {
@@ -85,8 +87,20 @@ min-width: 190px;
 height: 170px !important;
 border-radius: 30px !important;
 padding: 10px;
+overflow: hidden;
 
 }
+
+/* .hourlies {
+    position: relative;
+    top: 100%;
+    left: 0;
+    width: 100%; 
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out border 0.3s ease-out;
+    padding: 0 10px;
+} */
+
 
 .map {
     max-width: 100%;
@@ -98,6 +112,7 @@ padding: 10px;
     grid-template-rows: 1fr;
     gap: 15px;
     max-width: 100%;
+    position: relative;
 }
 
 .cardtemp {
@@ -117,8 +132,21 @@ form {
     align-items: center !important;
 }
 
-.starBtn, .starBtn:hover {
-    border: none;
+.tinytemp {
+font-size: 40px;
+float: right;
+display: flex;
+align-items: center;
+font-weight: normal;
+}
+
+.tiniertemp {
+    font-size: 20px;
+    padding: 10px;
+}
+
+.weekday {
+    font-size: 20px;
 }
 
 @media (max-width: 1270px) {
