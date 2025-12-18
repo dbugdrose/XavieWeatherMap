@@ -1,0 +1,4 @@
+/*
+    Peer Reviewer Jesus Salgado: when comparing the site to the figma I can see that you had to make major changes due to the constraints of the API we were able to use. Overall it looks very similar to the figma in color and overall theme although you may want to resize the google map a bit and try to give it a radius like the figma wants try an iframe and see if that helps. try to limit the amount of favorites you can have to 3 to be more like the figma. Also if you enter digits into the search it tries to give you a city maybe put in an if statement to catch nulls and numbers so they have to put in words.
+    Other than that you did a great job, i can see why you were a bit overwhelmed with this one as it was not small task but you did a great job and you condensed it down to what you were able to do with the tools/time that we have.
+*/
