@@ -310,8 +310,8 @@ const getLocation = () => {
 
                     maintemp.innerHTML = "";
                     const todaytempP = document.createElement("p");
-                    if (units = "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
-                    else { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                    if (units == "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                        if (units == "metric") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">C</span></span>`; }
                     maintemp.appendChild(todaytempP);
 
                     todaymaxparent.innerHTML = "";
@@ -696,8 +696,8 @@ function getCoordinatesByCity(city) {
 
                         maintemp.innerHTML = "";
                         const todaytempP = document.createElement("p");
-                        if (units = "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
-                        else { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                        if (units == "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                        if (units == "metric") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">C</span></span>`; }
                         maintemp.appendChild(todaytempP);
 
                         todaymaxparent.innerHTML = "";
