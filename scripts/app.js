@@ -82,11 +82,13 @@ let realfeel;
 let pressure;
 let humidity;
 let visibility;
+let citysearch = false;
 
 
 // --------------get data function start-------------------------------------------------------------------//
 
 const getLocation = () => {
+    citysearch = false;
     navigator.geolocation.getCurrentPosition(
         (position) => {
             lat = position.coords.latitude;
@@ -119,7 +121,6 @@ const getLocation = () => {
 
                         if (todaymin > forecastdata.list[i].main.temp_min) {
                             todaymin = forecastdata.list[i].main.temp_min;
-                            console.log("this is working")
                         }
                         if (todaymax < forecastdata.list[i].main.temp_max) {
                             todaymax = forecastdata.list[i].main.temp_max
@@ -462,6 +463,17 @@ const getLocation = () => {
 
 // Function to fetch coordinates
 function getCoordinatesByCity(city) {
+    citysearch = true;
+    let todaymin = 100000;
+    todaymax = -100000;
+    min2 = 100000;
+    max2 = -100000;
+    min3 = 100000;
+    max3 = -100000;
+    min4 = 100000;
+    max4 = -100000;
+    min5 = 100000;
+    max5 = -100000;
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${stateCode},${countryCode}&limit=1&appid=${APIKey}`)
         .then((response) => response.json())
         .then(data => {
@@ -487,10 +499,10 @@ function getCoordinatesByCity(city) {
                         humidity = forecastdata.list[0].main.humidity;
 
 
-
                         for (let i = 0; i < 8; i++) {
+
                             if (todaymin > forecastdata.list[i].main.temp_min) {
-                                todaymin = forecastdata.list[i].main.temp_min
+                                todaymin = forecastdata.list[i].main.temp_min;
                             }
                             if (todaymax < forecastdata.list[i].main.temp_max) {
                                 todaymax = forecastdata.list[i].main.temp_max
@@ -676,7 +688,7 @@ function getCoordinatesByCity(city) {
                             }
                         }
 
-                        console.log("this is working")
+
                         nameParent.innerHTML = "";
                         const cityP = document.createElement("p");
                         cityP.textContent = name + ", " + country;
@@ -684,7 +696,8 @@ function getCoordinatesByCity(city) {
 
                         maintemp.innerHTML = "";
                         const todaytempP = document.createElement("p");
-                        todaytempP.textContent = Math.floor(todaytemp) + "°";
+                        if (units = "imperial") { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
+                        else { todaytempP.innerHTML = `${Math.floor(todaytemp)} <span class="tinytemp">°<span class="tiniertemp">F</span></span>`; }
                         maintemp.appendChild(todaytempP);
 
                         todaymaxparent.innerHTML = "";
@@ -769,6 +782,11 @@ function getCoordinatesByCity(city) {
 
                         const dayOfMonth = today.getDate();
 
+                        day0Parent.innerHTML = "";
+                        const day0P = document.createElement("p");
+                        day0P.textContent = days[dayIndex];
+                        day0Parent.appendChild(day0P);
+
                         day1Parent.innerHTML = "";
                         const day1P = document.createElement("p");
                         day1P.textContent = days[(dayIndex + 1) % days.length];
@@ -813,6 +831,13 @@ function getCoordinatesByCity(city) {
                         const date4P = document.createElement("p");
                         date4P.textContent = (dayOfMonth + 4);
                         date4Parent.appendChild(date4P);
+
+                        const map = document.createElement("div")
+                        mapParent.innerHTML = "";
+                        map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" width="240px" height="170px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+                        mapParent.appendChild(map);
+
+
                     })
 
                 const map = document.createElement("div")
@@ -970,10 +995,21 @@ blackBtn.addEventListener("click", () => {
 
 fBtn.addEventListener("click", () => {
     celsius = false;
-    getLocation();
+    if (citysearch == true)
+        {getCoordinatesByCity(city);}
+    else
+    {getLocation();
+    getLocalName();
+    }
 })
 
 cBtn.addEventListener("click", () => {
     celsius = true;
-    getLocation();
+    if (citysearch == true)
+        {getCoordinatesByCity(city);}
+    else
+    {getLocation();
+    getLocalName();
+    }
+;
 })
