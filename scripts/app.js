@@ -868,7 +868,8 @@ const getLocalName = () => {
                     const cityP = document.createElement("p");
                     cityP.textContent = data.name;
                     nameParent.appendChild(cityP);
-
+                    
+                    name = data.name;
                 })
         })
 }
