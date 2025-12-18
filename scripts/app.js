@@ -960,8 +960,7 @@ function Gray() {
 // --------------event listeners start-------------------------------------------------------------------//
 
 
-button.addEventListener("click", () => {
-    // Check if the browser supports geolocation
+addEventListener("DOMContentLoaded", (event) => { 
     getLocation();
     getLocalName();
     DisplayFavorite();
