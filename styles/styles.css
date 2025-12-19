@@ -91,16 +91,6 @@ overflow: hidden;
 
 }
 
-/* .hourlies {
-    position: relative;
-    top: 100%;
-    left: 0;
-    width: 100%; 
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out border 0.3s ease-out;
-    padding: 0 10px;
-} */
-
 
 .map {
     max-width: 100%;
@@ -155,6 +145,26 @@ width: 12em;
 height: 170px !important;
 border-radius: 30px !important;
 padding: 10px;
+}
+
+.airconditionscont {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+.airconditionscont img {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.conditions {
+width: clamp(12rem, 90vw, 40rem);
+padding: 0px;
+margin: 0px;
+font-size: clamp(1rem, 1vw, 2.5rem);
+
 }
 }
 
