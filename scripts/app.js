@@ -88,6 +88,7 @@ let citysearch = false;
 // --------------get data function start-------------------------------------------------------------------//
 
 const getLocation = () => {
+
     citysearch = false;
     navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -473,7 +474,16 @@ function getCoordinatesByCity(city) {
     min4 = 100000;
     max4 = -100000;
     min5 = 100000;
-    max5 = -100000;
+    max5 = -100000;    
+for (let i = 0; i < city.length; i++) {
+        if (!isNaN(Number(city[i]))) {
+            if (!isNaN(parseFloat(city[i])) && isFinite(city[i])) {
+                alert("Please enter a valid city.")
+                return true;
+            }
+        }
+    }
+
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${stateCode},${countryCode}&limit=1&appid=${APIKey}`)
         .then((response) => response.json())
         .then(data => {
@@ -845,7 +855,6 @@ function getCoordinatesByCity(city) {
                 map.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3142.401967534331!2d${lat}!3d${lon}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzjCsDAyJzE1LjgiTiAxMjHCsDE5JzE4LjQiVw!5e0!3m2!1sen!2sus!4v1765827264633!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
                 mapParent.appendChild(map);
             }
-
             else {
                 console.log("City not found.");
                 return null;
