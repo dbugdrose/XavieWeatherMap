@@ -3,9 +3,6 @@ import { APIKey } from '/scripts/environment.js';
 let lat;
 let lon;
 
-
-const button = document.getElementById("getLocationBtn");
-const output = document.getElementById("output");
 const mapParent = document.getElementById("mapParent");
 const searchbar = document.getElementById("searchbar");
 const maintemp = document.getElementById("maintemp");
@@ -27,12 +24,8 @@ const cBtn = document.getElementById("cBtn");
 const realfeelParent = document.getElementById("realfeelParent");
 const windParent = document.getElementById("windParent");
 const humidityParent = document.getElementById("humidityParent");
-const airqualityParent = document.getElementById("airqualityParent");
 const visibilityParent = document.getElementById("visibilityParent");
-const chanceofrainParent = document.getElementById("chanceofrainParent");
-const uvindexParent = document.getElementById("uvindexParent");
 const pressureParent = document.getElementById("pressureParent");
-const dewpointParent = document.getElementById("dewpointParent");
 const day0Parent = document.getElementById("day0Parent");
 const day1Parent = document.getElementById("day1Parent");
 const day2Parent = document.getElementById("day2Parent");
@@ -60,9 +53,6 @@ let min4 = 100000;
 let max4 = -100000;
 let min5 = 100000;
 let max5 = -100000;
-
-
-
 
 let celsius = false;
 let units = "imperial";
@@ -95,7 +85,7 @@ const getLocation = () => {
             lat = position.coords.latitude;
             lon = position.coords.longitude;
 
-            let todaymin = 100000;
+            todaymin = 100000;
             todaymax = -100000;
             min2 = 100000;
             max2 = -100000;
@@ -457,10 +447,6 @@ const getLocation = () => {
 
         })
 }
-
-
-
-
 
 // Function to fetch coordinates
 function getCoordinatesByCity(city) {
@@ -878,8 +864,6 @@ const getLocalName = () => {
                 })
         })
 }
-
-
 
 const getLocalStorage = (name, lat, lon) => {
     favoriteItem = localStorage.getItem("Favorite");
